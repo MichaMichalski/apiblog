@@ -1,0 +1,20 @@
+{
+  "name": "My Blog",
+  "description": "A modern statically generated blog",
+  "logo": "",
+  "favicon": "/favicon.ico",
+  "language": "de",
+  "postsPerPage": 10,
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Blog", "href": "/blog" }
+  ],
+  "footer": {
+    "text": "© 2026 My Blog. Alle Rechte vorbehalten."
+  },
+  "social": {
+    "twitter": "",
+    "github": "",
+    "linkedin": ""
+  }
+}

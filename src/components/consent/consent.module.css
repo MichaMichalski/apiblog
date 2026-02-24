@@ -1,0 +1,84 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.banner {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-border-radius);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem 2rem;
+  max-width: 640px;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.category input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-primary);
+}
+
+.categoryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.categoryInfo strong {
+  font-size: 0.875rem;
+}
+
+.categoryDesc {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .buttons {
+    flex-direction: column;
+  }
+  .banner {
+    padding: 1.25rem;
+  }
+}

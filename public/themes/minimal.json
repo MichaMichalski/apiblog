@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "colors": {
+    "primary": "#000000",
+    "primaryHover": "#333333",
+    "secondary": "#666666",
+    "secondaryHover": "#444444",
+    "background": "#FFFFFF",
+    "surface": "#FAFAFA",
+    "surfaceHover": "#F5F5F5",
+    "text": "#111111",
+    "textMuted": "#888888",
+    "border": "#EEEEEE",
+    "error": "#CC0000",
+    "success": "#008800",
+    "warning": "#CC8800"
+  },
+  "fonts": {
+    "heading": { "family": "Georgia, serif", "weight": "400" },
+    "body": { "family": "system-ui, sans-serif", "weight": "400" }
+  },
+  "layout": {
+    "maxWidth": "960px",
+    "contentWidth": "680px",
+    "sidebarPosition": "right",
+    "headerStyle": "static"
+  },
+  "components": {
+    "card": { "borderRadius": "0px", "shadow": "none" },
+    "button": { "borderRadius": "0px" },
+    "input": { "borderRadius": "0px" }
+  },
+  "spacing": {
+    "sectionGap": "2.5rem",
+    "paragraphGap": "1.25rem",
+    "cardGap": "1.25rem"
+  }
+}

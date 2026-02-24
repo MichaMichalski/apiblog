@@ -1,0 +1,34 @@
+:root {
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+  --color-secondary: #10B981;
+  --color-secondary-hover: #059669;
+  --color-background: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-surface-hover: #F3F4F6;
+  --color-text: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-error: #EF4444;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+
+  --font-heading: Inter, system-ui, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: Merriweather, Georgia, serif;
+  --font-body-weight: 400;
+
+  --layout-max-width: 1200px;
+  --layout-content-width: 780px;
+  --layout-sidebar-position: right;
+  --layout-header-style: fixed;
+
+  --card-border-radius: 8px;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --button-border-radius: 6px;
+  --input-border-radius: 6px;
+
+  --spacing-section-gap: 3rem;
+  --spacing-paragraph-gap: 1.5rem;
+  --spacing-card-gap: 1.5rem;
+}

@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "colors": {
+    "primary": "#3B82F6",
+    "primaryHover": "#2563EB",
+    "secondary": "#10B981",
+    "secondaryHover": "#059669",
+    "background": "#FFFFFF",
+    "surface": "#F9FAFB",
+    "surfaceHover": "#F3F4F6",
+    "text": "#1F2937",
+    "textMuted": "#6B7280",
+    "border": "#E5E7EB",
+    "error": "#EF4444",
+    "success": "#10B981",
+    "warning": "#F59E0B"
+  },
+  "fonts": {
+    "heading": { "family": "Inter, system-ui, sans-serif", "weight": "700" },
+    "body": { "family": "Merriweather, Georgia, serif", "weight": "400" }
+  },
+  "layout": {
+    "maxWidth": "1200px",
+    "contentWidth": "780px",
+    "sidebarPosition": "right",
+    "headerStyle": "fixed"
+  },
+  "components": {
+    "card": { "borderRadius": "8px", "shadow": "0 1px 3px rgba(0,0,0,0.1)" },
+    "button": { "borderRadius": "6px" },
+    "input": { "borderRadius": "6px" }
+  },
+  "spacing": {
+    "sectionGap": "3rem",
+    "paragraphGap": "1.5rem",
+    "cardGap": "1.5rem"
+  }
+}

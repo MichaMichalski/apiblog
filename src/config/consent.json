@@ -1,0 +1,32 @@
+{
+  "categories": {
+    "necessary": {
+      "label": "Notwendig",
+      "description": "Essenzielle Cookies für die Grundfunktionen der Website.",
+      "required": true,
+      "scripts": []
+    },
+    "analytics": {
+      "label": "Analyse",
+      "description": "Cookies zur Analyse der Website-Nutzung und Verbesserung des Angebots.",
+      "required": false,
+      "scripts": [
+        {
+          "provider": "google-analytics",
+          "trackingId": ""
+        }
+      ]
+    },
+    "advertising": {
+      "label": "Werbung",
+      "description": "Cookies für personalisierte Werbung und Anzeigenmessung.",
+      "required": false,
+      "scripts": [
+        {
+          "provider": "google-adsense",
+          "publisherId": ""
+        }
+      ]
+    }
+  }
+}

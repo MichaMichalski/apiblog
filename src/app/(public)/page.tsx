@@ -1,0 +1,53 @@
+import { prisma } from "@/lib/db";
+import siteConfig from "@/config/site.json";
+import PostCard from "@/components/public/PostCard";
+import { WebSiteJsonLd } from "@/components/seo/JsonLd";
+import styles from "@/components/public/public.module.css";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const posts = await prisma.post.findMany({
+    where: { status: "published" },
+    orderBy: { publishedAt: "desc" },
+    take: siteConfig.postsPerPage,
+    include: { author: { select: { name: true } } },
+  });
+
+  return (
+    <>
+      <WebSiteJsonLd
+        name={siteConfig.name}
+        description={siteConfig.description}
+        url={SITE_URL}
+      />
+
+      <section className={styles.heroSection}>
+        <h1 className={styles.heroTitle}>{siteConfig.name}</h1>
+        <p className={styles.heroDescription}>{siteConfig.description}</p>
+      </section>
+
+      {posts.length > 0 ? (
+        <section className={styles.postsGrid}>
+          {posts.map((post) => (
+            <PostCard
+              key={post.id}
+              title={post.title}
+              slug={post.slug}
+              excerpt={post.excerpt}
+              publishedAt={post.publishedAt?.toISOString() ?? null}
+              featuredImage={post.featuredImage}
+              authorName={post.author.name}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className={styles.emptyState}>
+          <p>Noch keine Beiträge vorhanden.</p>
+        </div>
+      )}
+    </>
+  );
+}
