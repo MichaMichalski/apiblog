@@ -42,10 +42,9 @@ COPY --from=prod-deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 RUN mkdir -p prisma/data public/uploads
 RUN chown -R nextjs:nodejs prisma/data public/uploads src/config
 
-USER nextjs
-
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD node_modules/.bin/prisma migrate deploy && node server.js
+CMD chown nextjs:nodejs prisma/data public/uploads && \
+    su -s /bin/sh nextjs -c "node_modules/.bin/prisma migrate deploy && exec node server.js"
