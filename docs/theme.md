@@ -407,6 +407,18 @@ Die zugehörigen CSS-Stylesheets müssen die neuen Variablen dann in ihren Regel
 
 ---
 
+## Verwandte Konfiguration
+
+Neben dem Theme gibt es weitere Anpassungsmöglichkeiten, die in separaten Dokumentationen beschrieben sind:
+
+- **[Menüs](menus.md)** — Hierarchische Navigationsmenüs mit Positionen (Header, Footer, Mobile)
+- **[Widgets](widgets.md)** — Platzierbare Inhaltsblöcke in definierten Bereichen (Sidebar, Footer, etc.)
+- **[Customizer](customizer.md)** — Header/Footer-Builder, Homepage-Einstellungen, Blog-Layout, Lese-Einstellungen, Custom CSS
+
+Diese Konfigurationen ergänzen das Theme und werden ebenfalls in der `Setting`-Tabelle gespeichert.
+
+---
+
 ## API-Zugriff
 
 Das Theme wird in der Datenbank gespeichert und kann über die REST-API gelesen und aktualisiert werden:

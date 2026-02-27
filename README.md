@@ -26,12 +26,16 @@ Open [http://localhost:3000](http://localhost:3000) for the public site and [htt
 - **Static Page Generation** — Public pages are statically generated at build time with on-demand revalidation for SEO
 - **JSON Theme System** — Change the theme via DB/API/Admin-UI to completely reskin the site without touching code
 - **Block-based Content** — Posts and pages are structured as JSON blocks (paragraphs, headings, images, code, quotes, ads, lists)
-- **REST API** — Full CRUD for posts, pages, themes, and media uploads via `/api/v1/`
+- **Menu System** — Hierarchical navigation menus with multiple locations (header, footer, mobile), dropdown support
+- **Widget System** — Configurable widgets (recent posts, search, text, HTML, social links, newsletter) placeable in defined areas (sidebar, footer columns, etc.)
+- **Header/Footer Builder** — WordPress-style row/column builder for header (3 rows) and footer (widget area + bottom bar) with drag-and-drop elements
+- **Customizer** — Homepage settings (static page vs. latest posts), blog layout (grid/list, columns, sidebar), reading settings, custom CSS injection
+- **REST API** — Full CRUD for posts, pages, themes, menus, widgets, and all customizer settings via `/api/v1/`
 - **SEO Suite** — Sitemap.xml, robots.txt, Open Graph, Twitter Cards, JSON-LD Structured Data, canonical URLs, meta robots
 - **SEO Analysis** — Yoast-like real-time SEO scoring in the admin editor (keyword density, title length, meta description, readability)
 - **Cookie Consent** — GDPR-compliant consent banner with configurable analytics/advertising categories
 - **Google Analytics & AdSense** — Integrated with consent-gated loading
-- **Admin Panel** — Dashboard, post/page editors with live preview and SEO analysis, theme editor, media library
+- **Admin Panel** — Dashboard, post/page editors, theme editor, menu editor, widget manager, customizer, media library
 - **No Breaking Changes** — API versioning, Prisma migrations, and schema versioning
 
 ## Configuration Files
@@ -92,6 +96,38 @@ DELETE /api/v1/pages/:id      Delete page
 
 GET    /api/v1/theme          Get current theme
 PUT    /api/v1/theme          Update theme
+
+GET    /api/v1/site           Get site config
+PUT    /api/v1/site           Update site config
+
+GET    /api/v1/menus          List all menus
+POST   /api/v1/menus          Create menu
+GET    /api/v1/menus/:id      Get menu
+PUT    /api/v1/menus/:id      Update menu
+DELETE /api/v1/menus/:id      Delete menu
+GET    /api/v1/menu-locations Get menu locations
+PUT    /api/v1/menu-locations Update menu locations
+
+GET    /api/v1/widget-areas   Get widget areas
+PUT    /api/v1/widget-areas   Update widget areas
+GET    /api/v1/widgets        List all widgets
+POST   /api/v1/widgets        Create widget
+GET    /api/v1/widgets/:id    Get widget
+PUT    /api/v1/widgets/:id    Update widget
+DELETE /api/v1/widgets/:id    Delete widget
+
+GET    /api/v1/customizer/header      Get header builder config
+PUT    /api/v1/customizer/header      Update header builder config
+GET    /api/v1/customizer/footer      Get footer builder config
+PUT    /api/v1/customizer/footer      Update footer builder config
+GET    /api/v1/customizer/homepage    Get homepage settings
+PUT    /api/v1/customizer/homepage    Update homepage settings
+GET    /api/v1/customizer/blog-layout Get blog layout config
+PUT    /api/v1/customizer/blog-layout Update blog layout config
+GET    /api/v1/customizer/reading     Get reading settings
+PUT    /api/v1/customizer/reading     Update reading settings
+GET    /api/v1/customizer/css         Get custom CSS
+PUT    /api/v1/customizer/css         Update custom CSS
 
 POST   /api/v1/upload         Upload media (multipart/form-data)
 GET    /api/v1/upload         List all media
@@ -156,6 +192,9 @@ Set environment variables in `.env` or directly in `docker-compose.yml`:
 | [docs/seo.md](docs/seo.md) | SEO & Analytics (sitemap, OG, JSON-LD, keyword analysis, consent) |
 | [docs/content-blocks.md](docs/content-blocks.md) | Block-based content system, post/page schemas, API examples |
 | [docs/theme.md](docs/theme.md) | Theme JSON structure, CSS variables, API access |
+| [docs/menus.md](docs/menus.md) | Menu system, hierarchical items, locations, API endpoints |
+| [docs/widgets.md](docs/widgets.md) | Widget system, widget types, widget areas, API endpoints |
+| [docs/customizer.md](docs/customizer.md) | Customizer: header/footer builder, homepage, blog layout, reading, CSS |
 
 ## Project Structure
 
@@ -164,21 +203,34 @@ src/
   app/
     (public)/          Static public pages (SSG)
     admin/             Admin panel (dynamic)
+      menus/           Menu editor
+      widgets/         Widget manager
+      customizer/      Customizer (header, footer, homepage, blog-layout, reading, css)
     api/v1/            REST API routes
+      menus/           Menu CRUD API
+      menu-locations/  Menu locations API
+      widgets/         Widget CRUD API
+      widget-areas/    Widget areas API
+      customizer/      Customizer APIs (header, footer, homepage, blog-layout, reading, css)
     sitemap.ts         Dynamic sitemap.xml generation
     robots.ts          Robots.txt generation
   components/
     blocks/            Content block renderers
     admin/             Admin UI components (incl. SeoAnalysis panel)
     consent/           Cookie consent system
-    public/            Public layout components
+    public/            Public layout components (Header, Footer with builder support)
     seo/               JSON-LD structured data components
     theme/             Theme provider
+    widgets/           Widget components (Text, RecentPosts, Search, SocialLinks, etc.)
   lib/
     db.ts              Prisma client
     auth.ts            Session & API key authentication
     blocks.ts          Zod schemas for blocks, posts, pages
+    menus.ts           Menu system (menus, locations, tree builder)
+    widgets.ts         Widget system (areas, instances, types)
+    customizer.ts      Customizer (header/footer builder, homepage, blog layout, reading, CSS)
     seo.ts             SEO utilities, text analysis, keyword scoring
+    site.ts            Site config (name, description, social, navigation)
     theme.ts           Theme loading & CSS generation
     revalidate.ts      On-demand revalidation helpers
   config/              JSON configuration files (site, consent, theme)
@@ -187,4 +239,7 @@ docs/
   seo.md               SEO & Analytics documentation
   content-blocks.md    Content block documentation
   theme.md             Theme JSON documentation
+  menus.md             Menu system documentation
+  widgets.md           Widget system documentation
+  customizer.md        Customizer documentation
 ```

@@ -10,9 +10,12 @@ const navItems = [
   { href: "/admin/posts", label: "Beiträge", icon: "📝" },
   { href: "/admin/pages", label: "Seiten", icon: "📄" },
   { href: "/admin/media", label: "Medien", icon: "🖼️" },
+  { href: "/admin/menus", label: "Menüs", icon: "☰" },
+  { href: "/admin/widgets", label: "Widgets", icon: "🧩" },
   { href: "/admin/site", label: "Website", icon: "🌐" },
   { href: "/admin/theme", label: "Theme", icon: "🎨" },
-  { href: "/admin/settings", label: "Einstellungen", icon: "⚙️" },
+  { href: "/admin/customizer", label: "Customizer", icon: "⚙️" },
+  { href: "/admin/settings", label: "Einstellungen", icon: "🔧" },
 ];
 
 export default function AdminShell({ children }: { children: ReactNode }) {

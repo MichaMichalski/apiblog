@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getThemeFromDB, getFontImportUrl, themeToCSS } from "@/lib/theme";
 import { getSiteFromDB } from "@/lib/site";
+import { getCustomCSS } from "@/lib/customizer";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import CookieConsent from "@/components/consent/CookieConsent";
 import ScriptLoader from "@/components/consent/ScriptLoader";
@@ -22,7 +23,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, site] = await Promise.all([getThemeFromDB(), getSiteFromDB()]);
+  const [theme, site, customCss] = await Promise.all([
+    getThemeFromDB(),
+    getSiteFromDB(),
+    getCustomCSS(),
+  ]);
   const fontUrl = getFontImportUrl(theme);
   const cssVars = themeToCSS(theme);
 
@@ -31,6 +36,7 @@ export default async function RootLayout({
       <head>
         {fontUrl && <link rel="stylesheet" href={fontUrl} />}
         <style dangerouslySetInnerHTML={{ __html: cssVars }} />
+        {customCss.css && <style dangerouslySetInnerHTML={{ __html: customCss.css }} />}
       </head>
       <body>
         <ThemeProvider theme={theme}>
