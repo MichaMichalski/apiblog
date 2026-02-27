@@ -42,6 +42,9 @@ COPY --from=prod-deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 RUN mkdir -p prisma/data public/uploads
 RUN chown -R nextjs:nodejs prisma/data public/uploads src/config
 
+VOLUME /app/prisma/data
+VOLUME /app/public/uploads
+
 USER nextjs
 
 EXPOSE 3000
