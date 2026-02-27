@@ -1,7 +1,7 @@
-FROM node:20-alpine AS base
+FROM node:20-bookworm-slim AS base
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
@@ -10,15 +10,23 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV DATABASE_URL="file:./prisma/data/build.db"
 RUN npx prisma generate
+RUN mkdir -p prisma/data && npx prisma db push
 RUN npm run build
+
+FROM base AS prod-deps
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --omit=dev
 
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 --home /home/nextjs --ingroup nodejs nextjs
+ENV HOME=/home/nextjs
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
@@ -26,6 +34,8 @@ COPY --from=builder /app/src/config ./src/config
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+COPY --from=prod-deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 RUN mkdir -p prisma/data public/uploads
 RUN chown -R nextjs:nodejs prisma/data public/uploads src/config
@@ -36,4 +46,4 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
+CMD node_modules/.bin/prisma migrate deploy && node server.js
