@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "colors": {
     "primary": "#3B82F6",
     "primaryHover": "#2563EB",
@@ -34,5 +34,38 @@
     "sectionGap": "3rem",
     "paragraphGap": "1.5rem",
     "cardGap": "1.5rem"
+  },
+  "elements": {
+    "body": { "fontSize": "16px", "lineHeight": "1.6", "letterSpacing": "0" },
+    "h1": { "fontSize": "2.5rem", "lineHeight": "1.2", "letterSpacing": "-0.025em", "marginBottom": "1rem", "color": "", "textTransform": "none" },
+    "h2": { "fontSize": "2rem", "lineHeight": "1.25", "letterSpacing": "-0.02em", "marginBottom": "0.75rem", "color": "", "textTransform": "none" },
+    "h3": { "fontSize": "1.5rem", "lineHeight": "1.3", "letterSpacing": "0", "marginBottom": "0.75rem", "color": "", "textTransform": "none" },
+    "h4": { "fontSize": "1.25rem", "lineHeight": "1.35", "letterSpacing": "0", "marginBottom": "0.5rem", "color": "", "textTransform": "none" },
+    "h5": { "fontSize": "1.125rem", "lineHeight": "1.4", "letterSpacing": "0", "marginBottom": "0.5rem", "color": "", "textTransform": "none" },
+    "h6": { "fontSize": "1rem", "lineHeight": "1.4", "letterSpacing": "0.025em", "marginBottom": "0.5rem", "color": "", "textTransform": "uppercase" },
+    "paragraph": { "fontSize": "1rem", "lineHeight": "1.7", "marginBottom": "1.5rem", "color": "" },
+    "link": { "color": "", "hoverColor": "", "underline": "hover", "fontWeight": "inherit" },
+    "blockquote": { "borderLeftWidth": "4px", "borderLeftColor": "", "backgroundColor": "", "padding": "0.75rem 1.25rem", "fontStyle": "italic", "fontSize": "1.0625rem", "color": "" },
+    "image": { "borderRadius": "0", "shadow": "none", "margin": "1.5rem 0" },
+    "code": { "fontFamily": "'Fira Code', monospace", "fontSize": "0.875em", "backgroundColor": "", "padding": "0.125rem 0.375rem", "borderRadius": "4px", "color": "" },
+    "codeBlock": { "backgroundColor": "", "borderColor": "", "borderRadius": "", "padding": "1rem", "fontSize": "0.875rem", "lineHeight": "1.6" },
+    "list": { "paddingLeft": "1.5rem", "itemSpacing": "0.5rem", "markerColor": "" },
+    "hr": { "borderColor": "", "borderWidth": "1px", "margin": "3rem 0" },
+    "table": { "borderColor": "", "headerBackground": "", "headerColor": "", "stripedRows": "false", "fontSize": "0.875rem" }
+  },
+  "sections": {
+    "header": { "height": "64px", "background": "", "borderColor": "", "shadow": "none", "logoFontSize": "1.25rem", "navFontSize": "0.9375rem", "navGap": "1.5rem", "padding": "0 1.5rem", "sticky": "true" },
+    "footer": { "background": "", "textColor": "", "borderColor": "", "padding": "2rem 0", "fontSize": "0.875rem" },
+    "hero": { "background": "", "textColor": "", "padding": "4rem 1.5rem", "titleFontSize": "2.5rem", "descriptionFontSize": "1.125rem", "textAlign": "center", "backgroundImage": "", "backgroundSize": "cover", "backgroundPosition": "center", "overlay": "" },
+    "postCard": { "background": "", "borderColor": "", "borderRadius": "", "shadow": "", "hoverShadow": "", "imageAspectRatio": "16/9", "titleFontSize": "1.25rem", "excerptFontSize": "0.9375rem", "metaFontSize": "0.8125rem", "padding": "1.25rem" },
+    "content": { "maxWidth": "", "padding": "0 1.5rem", "imageMaxWidth": "100%", "imageAlignment": "center" }
+  },
+  "backgrounds": {
+    "body": { "type": "solid", "color": "", "image": "", "size": "cover", "position": "center", "repeat": "no-repeat", "attachment": "scroll" }
+  },
+  "effects": {
+    "shadows": { "sm": "0 1px 2px rgba(0,0,0,0.05)", "md": "0 4px 6px rgba(0,0,0,0.07)", "lg": "0 10px 15px rgba(0,0,0,0.1)", "xl": "0 20px 25px rgba(0,0,0,0.1)" },
+    "transitions": { "duration": "0.15s", "timing": "ease" },
+    "borderRadius": { "sm": "4px", "md": "8px", "lg": "16px", "full": "9999px" }
   }
 }

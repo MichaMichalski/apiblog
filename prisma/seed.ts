@@ -22,6 +22,16 @@ async function main() {
   });
   console.log("Seeded default theme into database.");
 
+  // Seed default site config from file into DB
+  const sitePath = join(process.cwd(), "src", "config", "site.json");
+  const siteJson = readFileSync(sitePath, "utf-8");
+  await prisma.setting.upsert({
+    where: { key: "site" },
+    update: { value: siteJson },
+    create: { key: "site", value: siteJson },
+  });
+  console.log("Seeded default site config into database.");
+
   const passwordHash = await hash("admin123", 12);
   const user = await prisma.user.create({
     data: {

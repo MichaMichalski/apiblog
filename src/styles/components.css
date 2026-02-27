@@ -9,7 +9,9 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+  transition: background-color var(--effect-transitions-duration, 0.15s) var(--effect-transitions-timing, ease),
+              color var(--effect-transitions-duration, 0.15s) var(--effect-transitions-timing, ease),
+              box-shadow var(--effect-transitions-duration, 0.15s) var(--effect-transitions-timing, ease);
   text-decoration: none;
   gap: 0.5rem;
 }

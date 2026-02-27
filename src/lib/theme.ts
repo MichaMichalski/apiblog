@@ -8,6 +8,10 @@ export interface ThemeConfig {
   layout: Record<string, string>;
   components: Record<string, Record<string, string>>;
   spacing: Record<string, string>;
+  elements?: Record<string, Record<string, string>>;
+  sections?: Record<string, Record<string, string>>;
+  backgrounds?: Record<string, Record<string, string>>;
+  effects?: Record<string, Record<string, string>>;
 }
 
 const THEME_KEY = "theme";
@@ -30,6 +34,24 @@ export async function saveThemeToDB(theme: ThemeConfig): Promise<void> {
     update: { value: JSON.stringify(theme) },
     create: { key: THEME_KEY, value: JSON.stringify(theme) },
   });
+}
+
+function camelToKebab(str: string): string {
+  return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+function emitNestedVars(
+  lines: string[],
+  prefix: string,
+  data: Record<string, Record<string, string>> | undefined
+) {
+  if (!data) return;
+  for (const [group, props] of Object.entries(data)) {
+    for (const [prop, value] of Object.entries(props)) {
+      if (value === "") continue;
+      lines.push(`  --${prefix}-${camelToKebab(group)}-${camelToKebab(prop)}: ${value};`);
+    }
+  }
 }
 
 export function themeToCSS(theme: ThemeConfig): string {
@@ -58,12 +80,13 @@ export function themeToCSS(theme: ThemeConfig): string {
     lines.push(`  --spacing-${camelToKebab(key)}: ${value};`);
   }
 
+  emitNestedVars(lines, "el", theme.elements);
+  emitNestedVars(lines, "section", theme.sections);
+  emitNestedVars(lines, "bg", theme.backgrounds);
+  emitNestedVars(lines, "effect", theme.effects);
+
   lines.push("}");
   return lines.join("\n");
-}
-
-function camelToKebab(str: string): string {
-  return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 }
 
 export function getFontImportUrl(theme: ThemeConfig): string {

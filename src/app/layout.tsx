@@ -1,30 +1,33 @@
 import type { Metadata } from "next";
 import { getThemeFromDB, getFontImportUrl, themeToCSS } from "@/lib/theme";
+import { getSiteFromDB } from "@/lib/site";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import CookieConsent from "@/components/consent/CookieConsent";
 import ScriptLoader from "@/components/consent/ScriptLoader";
-import siteConfig from "@/config/site.json";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteFromDB();
+  return {
+    title: {
+      default: site.name,
+      template: `%s | ${site.name}`,
+    },
+    description: site.description,
+  };
+}
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const theme = await getThemeFromDB();
+  const [theme, site] = await Promise.all([getThemeFromDB(), getSiteFromDB()]);
   const fontUrl = getFontImportUrl(theme);
   const cssVars = themeToCSS(theme);
 
   return (
-    <html lang={siteConfig.language}>
+    <html lang={site.language}>
       <head>
         {fontUrl && <link rel="stylesheet" href={fontUrl} />}
         <style dangerouslySetInnerHTML={{ __html: cssVars }} />

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getSiteFromDB } from "@/lib/site";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
 import { WebPageJsonLd } from "@/components/seo/JsonLd";
 import { getCanonicalUrl } from "@/lib/seo";
 import type { Block } from "@/lib/blocks";
-import siteConfig from "@/config/site.json";
 import styles from "@/components/public/public.module.css";
 
 export const revalidate = 3600;
@@ -35,6 +35,8 @@ export async function generateMetadata({
   const description = page.seoDescription || "";
   const canonical = page.canonicalUrl || getCanonicalUrl(`/${page.slug}`);
 
+  const site = await getSiteFromDB();
+
   return {
     title,
     description,
@@ -44,7 +46,7 @@ export async function generateMetadata({
       title,
       description,
       url: canonical,
-      siteName: siteConfig.name,
+      siteName: site.name,
       type: "website",
     },
     twitter: {
@@ -70,6 +72,7 @@ export default async function StaticPage({
 
   if (!page) notFound();
 
+  const site = await getSiteFromDB();
   const blocks: Block[] = JSON.parse(page.content);
   const canonical = page.canonicalUrl || getCanonicalUrl(`/${page.slug}`);
 
@@ -79,7 +82,7 @@ export default async function StaticPage({
         title={page.seoTitle || page.title}
         description={page.seoDescription || ""}
         url={canonical}
-        siteName={siteConfig.name}
+        siteName={site.name}
       />
       <div className={styles.pageContent}>
         <h1 className={styles.pageTitle}>{page.title}</h1>

@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "colors": {
     "primary": "#7C3AED",
     "primaryHover": "#6D28D9",
@@ -34,5 +34,38 @@
     "sectionGap": "4rem",
     "paragraphGap": "1.75rem",
     "cardGap": "2rem"
+  },
+  "elements": {
+    "body": { "fontSize": "16px", "lineHeight": "1.6", "letterSpacing": "0" },
+    "h1": { "fontSize": "3.5rem", "lineHeight": "1.1", "letterSpacing": "-0.04em", "marginBottom": "1.25rem", "color": "#F1F5F9", "textTransform": "none" },
+    "h2": { "fontSize": "2.5rem", "lineHeight": "1.15", "letterSpacing": "-0.03em", "marginBottom": "1rem", "color": "#F1F5F9", "textTransform": "none" },
+    "h3": { "fontSize": "1.75rem", "lineHeight": "1.25", "letterSpacing": "-0.02em", "marginBottom": "0.75rem", "color": "#F1F5F9", "textTransform": "none" },
+    "h4": { "fontSize": "1.375rem", "lineHeight": "1.3", "letterSpacing": "0", "marginBottom": "0.5rem", "color": "#F1F5F9", "textTransform": "none" },
+    "h5": { "fontSize": "1.125rem", "lineHeight": "1.4", "letterSpacing": "0", "marginBottom": "0.5rem", "color": "#F1F5F9", "textTransform": "none" },
+    "h6": { "fontSize": "0.875rem", "lineHeight": "1.4", "letterSpacing": "0.1em", "marginBottom": "0.5rem", "color": "#7C3AED", "textTransform": "uppercase" },
+    "paragraph": { "fontSize": "1.0625rem", "lineHeight": "1.75", "marginBottom": "1.75rem", "color": "#CBD5E1" },
+    "link": { "color": "#A78BFA", "hoverColor": "#C4B5FD", "underline": "hover", "fontWeight": "500" },
+    "blockquote": { "borderLeftWidth": "4px", "borderLeftColor": "#7C3AED", "backgroundColor": "#1E293B", "padding": "1rem 1.5rem", "fontStyle": "italic", "fontSize": "1.125rem", "color": "#94A3B8" },
+    "image": { "borderRadius": "16px", "shadow": "0 8px 24px rgba(0,0,0,0.4)", "margin": "2rem 0" },
+    "code": { "fontFamily": "'Fira Code', monospace", "fontSize": "0.875em", "backgroundColor": "#1E293B", "padding": "0.2rem 0.5rem", "borderRadius": "6px", "color": "#A78BFA" },
+    "codeBlock": { "backgroundColor": "#1E293B", "borderColor": "#334155", "borderRadius": "16px", "padding": "1.5rem", "fontSize": "0.875rem", "lineHeight": "1.7" },
+    "list": { "paddingLeft": "1.5rem", "itemSpacing": "0.625rem", "markerColor": "#7C3AED" },
+    "hr": { "borderColor": "#334155", "borderWidth": "2px", "margin": "4rem 0" },
+    "table": { "borderColor": "#334155", "headerBackground": "#1E293B", "headerColor": "#94A3B8", "stripedRows": "true", "fontSize": "0.875rem" }
+  },
+  "sections": {
+    "header": { "height": "72px", "background": "#0F172A", "borderColor": "#334155", "shadow": "0 4px 12px rgba(0,0,0,0.3)", "logoFontSize": "1.375rem", "navFontSize": "0.9375rem", "navGap": "2rem", "padding": "0 2rem", "sticky": "true" },
+    "footer": { "background": "#0B1120", "textColor": "#64748B", "borderColor": "#1E293B", "padding": "2.5rem 0", "fontSize": "0.875rem" },
+    "hero": { "background": "#0F172A", "textColor": "#F1F5F9", "padding": "6rem 2rem", "titleFontSize": "3.5rem", "descriptionFontSize": "1.25rem", "textAlign": "center", "backgroundImage": "", "backgroundSize": "cover", "backgroundPosition": "center", "overlay": "" },
+    "postCard": { "background": "#1E293B", "borderColor": "#334155", "borderRadius": "16px", "shadow": "0 4px 12px rgba(0,0,0,0.3)", "hoverShadow": "0 8px 24px rgba(124,58,237,0.2)", "imageAspectRatio": "16/9", "titleFontSize": "1.375rem", "excerptFontSize": "0.9375rem", "metaFontSize": "0.8125rem", "padding": "1.5rem" },
+    "content": { "maxWidth": "800px", "padding": "0 2rem", "imageMaxWidth": "100%", "imageAlignment": "center" }
+  },
+  "backgrounds": {
+    "body": { "type": "solid", "color": "#0F172A", "image": "", "size": "cover", "position": "center", "repeat": "no-repeat", "attachment": "scroll" }
+  },
+  "effects": {
+    "shadows": { "sm": "0 1px 3px rgba(0,0,0,0.2)", "md": "0 4px 12px rgba(0,0,0,0.3)", "lg": "0 10px 24px rgba(0,0,0,0.4)", "xl": "0 20px 40px rgba(0,0,0,0.5)" },
+    "transitions": { "duration": "0.2s", "timing": "ease" },
+    "borderRadius": { "sm": "6px", "md": "12px", "lg": "16px", "full": "9999px" }
   }
 }

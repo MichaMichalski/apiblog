@@ -1,16 +1,18 @@
 import Link from "next/link";
-import siteConfig from "@/config/site.json";
+import { getSiteFromDB } from "@/lib/site";
 import styles from "./public.module.css";
 
-export default function Header() {
+export default async function Header() {
+  const site = await getSiteFromDB();
+
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
         <Link href="/" className={styles.logo}>
-          {siteConfig.name}
+          {site.name}
         </Link>
         <nav className={styles.nav}>
-          {siteConfig.navigation.map((item) => (
+          {site.navigation.map((item) => (
             <Link key={item.href} href={item.href} className={styles.navLink}>
               {item.label}
             </Link>

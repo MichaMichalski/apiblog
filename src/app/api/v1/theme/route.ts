@@ -26,6 +26,19 @@ export async function PUT(request: NextRequest) {
       );
     }
 
+    if (body.elements && typeof body.elements !== "object") {
+      return NextResponse.json({ error: "elements must be an object" }, { status: 400 });
+    }
+    if (body.sections && typeof body.sections !== "object") {
+      return NextResponse.json({ error: "sections must be an object" }, { status: 400 });
+    }
+    if (body.backgrounds && typeof body.backgrounds !== "object") {
+      return NextResponse.json({ error: "backgrounds must be an object" }, { status: 400 });
+    }
+    if (body.effects && typeof body.effects !== "object") {
+      return NextResponse.json({ error: "effects must be an object" }, { status: 400 });
+    }
+
     await saveThemeToDB(body);
     revalidateAll();
 

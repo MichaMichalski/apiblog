@@ -7,6 +7,23 @@ function camelToKebab(str: string): string {
   return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 }
 
+function applyNestedVars(
+  root: HTMLElement,
+  prefix: string,
+  data: Record<string, Record<string, string>> | undefined
+) {
+  if (!data) return;
+  for (const [group, props] of Object.entries(data)) {
+    for (const [prop, value] of Object.entries(props)) {
+      if (value === "") continue;
+      root.style.setProperty(
+        `--${prefix}-${camelToKebab(group)}-${camelToKebab(prop)}`,
+        value
+      );
+    }
+  }
+}
+
 function applyTheme(theme: ThemeConfig) {
   const root = document.documentElement;
 
@@ -32,6 +49,11 @@ function applyTheme(theme: ThemeConfig) {
   for (const [key, value] of Object.entries(theme.spacing)) {
     root.style.setProperty(`--spacing-${camelToKebab(key)}`, value);
   }
+
+  applyNestedVars(root, "el", theme.elements);
+  applyNestedVars(root, "section", theme.sections);
+  applyNestedVars(root, "bg", theme.backgrounds);
+  applyNestedVars(root, "effect", theme.effects);
 }
 
 export default function ThemeProvider({

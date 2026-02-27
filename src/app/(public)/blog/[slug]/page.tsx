@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getSiteFromDB } from "@/lib/site";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
 import { ArticleJsonLd } from "@/components/seo/JsonLd";
 import { getCanonicalUrl, estimateReadingTime } from "@/lib/seo";
 import type { Block } from "@/lib/blocks";
-import siteConfig from "@/config/site.json";
 import styles from "@/components/public/public.module.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -32,6 +32,7 @@ export async function generateMetadata({
   });
   if (!post) return {};
 
+  const site = await getSiteFromDB();
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
   const canonical = post.canonicalUrl || getCanonicalUrl(`/blog/${post.slug}`);
@@ -46,7 +47,7 @@ export async function generateMetadata({
       title,
       description,
       url: canonical,
-      siteName: siteConfig.name,
+      siteName: site.name,
       type: "article",
       publishedTime: post.publishedAt?.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
@@ -75,6 +76,7 @@ export default async function BlogPostPage({
 
   if (!post) notFound();
 
+  const site = await getSiteFromDB();
   const blocks: Block[] = JSON.parse(post.content);
   const readingTime = estimateReadingTime(blocks);
   const canonical = post.canonicalUrl || getCanonicalUrl(`/blog/${post.slug}`);
@@ -89,7 +91,7 @@ export default async function BlogPostPage({
         publishedAt={post.publishedAt?.toISOString() || post.createdAt.toISOString()}
         updatedAt={post.updatedAt.toISOString()}
         authorName={post.author.name}
-        siteName={siteConfig.name}
+        siteName={site.name}
       />
       <article>
         <header className={styles.blogPostHeader}>
