@@ -145,7 +145,6 @@ Set environment variables in `.env` or directly in `docker-compose.yml`:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DATABASE_URL` | SQLite database path | `file:./data/blog.db` |
 | `SESSION_SECRET` | Session encryption key | (change in production) |
 | `API_KEY` | REST API authentication key | (change in production) |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL (sitemap, canonical, OG) | `http://localhost:3000` |

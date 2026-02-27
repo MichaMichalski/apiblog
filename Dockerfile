@@ -10,15 +10,17 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV DATABASE_URL="file:./prisma/data/build.db"
 RUN npx prisma generate
 RUN mkdir -p prisma/data && npx prisma db push
 RUN npm run build
+RUN rm -f prisma/data/blog.db
 
 FROM base AS prod-deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
+COPY prisma/schema.prisma prisma/schema.prisma
 RUN npm ci --omit=dev
+RUN npx prisma generate
 
 FROM base AS runner
 WORKDIR /app
