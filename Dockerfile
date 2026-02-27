@@ -1,5 +1,5 @@
 FROM node:20-bookworm-slim AS base
-RUN apt-get update && apt-get install -y openssl curl ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
 WORKDIR /app
@@ -41,9 +41,6 @@ COPY --from=prod-deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 RUN mkdir -p prisma/data public/uploads
 RUN chown -R nextjs:nodejs prisma/data public/uploads src/config
-
-VOLUME /app/prisma/data
-VOLUME /app/public/uploads
 
 USER nextjs
 
