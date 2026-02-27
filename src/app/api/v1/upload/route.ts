@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     const timestamp = Date.now();
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const filename = `${timestamp}-${safeName}`;
-    const uploadDir = join(process.cwd(), "public", "uploads");
+    const uploadDir = join(process.cwd(), "uploads");
     await mkdir(uploadDir, { recursive: true });
 
     const buffer = Buffer.from(await file.arrayBuffer());

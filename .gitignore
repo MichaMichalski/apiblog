@@ -27,8 +27,8 @@ prisma/data/
 *.db-journal
 
 # uploads (user-generated media)
-public/uploads/*
-!public/uploads/.gitkeep
+/uploads/*
+!/uploads/.gitkeep
 
 # testing
 /coverage
