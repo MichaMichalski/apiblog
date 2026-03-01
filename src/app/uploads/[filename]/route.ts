@@ -39,6 +39,7 @@ export async function GET(
         "Content-Type": contentType,
         "Content-Length": fileStat.size.toString(),
         "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept",
       },
     });
   } catch {

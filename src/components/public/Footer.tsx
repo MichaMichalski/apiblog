@@ -26,7 +26,7 @@ export default async function Footer() {
       case "footer-menu":
         if (!footerMenu || footerMenu.items.length === 0) return null;
         return (
-          <nav key="footer-menu" className={styles.footerNav}>
+          <nav key="footer-menu" className={styles.footerNav} aria-label="Footer-Navigation">
             {footerMenu.items
               .filter((i) => !i.parentId)
               .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -63,7 +63,7 @@ export default async function Footer() {
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           {footerMenu && footerMenu.items.length > 0 && (
-            <nav className={styles.footerNav}>
+            <nav className={styles.footerNav} aria-label="Footer-Navigation">
               {footerMenu.items
                 .filter((i) => !i.parentId)
                 .sort((a, b) => a.sortOrder - b.sortOrder)

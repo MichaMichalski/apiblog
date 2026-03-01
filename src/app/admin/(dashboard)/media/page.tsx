@@ -9,8 +9,17 @@ interface MediaItem {
   path: string;
   mimeType: string;
   size: number;
+  width: number;
+  height: number;
   alt: string;
   createdAt: string;
+}
+
+function thumbnailPath(src: string, mimeType: string): string {
+  if (mimeType === "image/svg+xml" || mimeType === "image/gif") return src;
+  const ext = src.match(/\.[^.]+$/)?.[0] ?? "";
+  const base = src.slice(0, -ext.length);
+  return `${base}-thumb.webp`;
 }
 
 export default function MediaPage() {
@@ -102,7 +111,7 @@ export default function MediaPage() {
                 justifyContent: "center"
               }}>
                 <img
-                  src={item.path}
+                  src={thumbnailPath(item.path, item.mimeType)}
                   alt={item.alt || item.filename}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"

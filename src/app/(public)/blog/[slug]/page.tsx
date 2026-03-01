@@ -6,6 +6,9 @@ import BlockRenderer from "@/components/blocks/BlockRenderer";
 import { ArticleJsonLd } from "@/components/seo/JsonLd";
 import { getCanonicalUrl, estimateReadingTime } from "@/lib/seo";
 import type { Block } from "@/lib/blocks";
+import { getMediaMap, collectImagePaths } from "@/lib/media";
+import { getAssetUrl } from "@/lib/cdn";
+import ResponsiveImage from "@/components/shared/ResponsiveImage";
 import styles from "@/components/public/public.module.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -36,7 +39,10 @@ export async function generateMetadata({
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
   const canonical = post.canonicalUrl || getCanonicalUrl(`/blog/${post.slug}`);
-  const image = post.featuredImage ? `${SITE_URL}${post.featuredImage}` : undefined;
+  const cdnImage = post.featuredImage ? getAssetUrl(post.featuredImage) : undefined;
+  const image = cdnImage
+    ? (cdnImage.startsWith("http") ? cdnImage : `${SITE_URL}${post.featuredImage}`)
+    : undefined;
 
   return {
     title,
@@ -80,6 +86,14 @@ export default async function BlogPostPage({
   const blocks: Block[] = JSON.parse(post.content);
   const readingTime = estimateReadingTime(blocks);
   const canonical = post.canonicalUrl || getCanonicalUrl(`/blog/${post.slug}`);
+  const imagePaths = collectImagePaths(blocks, post.featuredImage);
+  const mediaMap = await getMediaMap(imagePaths);
+  const featuredMedia = post.featuredImage ? mediaMap.get(post.featuredImage) : undefined;
+  const jsonLdImage = post.featuredImage
+    ? (getAssetUrl(post.featuredImage).startsWith("http")
+      ? getAssetUrl(post.featuredImage)
+      : `${SITE_URL}${post.featuredImage}`)
+    : null;
 
   return (
     <>
@@ -87,7 +101,7 @@ export default async function BlogPostPage({
         title={post.seoTitle || post.title}
         description={post.seoDescription || post.excerpt}
         url={canonical}
-        image={post.featuredImage ? `${SITE_URL}${post.featuredImage}` : null}
+        image={jsonLdImage}
         publishedAt={post.publishedAt?.toISOString() || post.createdAt.toISOString()}
         updatedAt={post.updatedAt.toISOString()}
         authorName={post.author.name}
@@ -117,16 +131,19 @@ export default async function BlogPostPage({
 
         {post.featuredImage && (
           <div style={{ maxWidth: "var(--layout-content-width)", margin: "0 auto 2rem", padding: "0 1.5rem" }}>
-            <img
+            <ResponsiveImage
               src={post.featuredImage}
               alt={post.title}
-              style={{ width: "100%", borderRadius: "var(--card-border-radius)" }}
+              width={featuredMedia?.width ?? 0}
+              height={featuredMedia?.height ?? 0}
+              priority
+              style={{ width: "100%", height: "auto", borderRadius: "var(--card-border-radius)" }}
             />
           </div>
         )}
 
         <div className={styles.blogPostContent}>
-          <BlockRenderer blocks={blocks} />
+          <BlockRenderer blocks={blocks} mediaMap={mediaMap} />
         </div>
       </article>
     </>

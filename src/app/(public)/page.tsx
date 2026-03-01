@@ -5,6 +5,7 @@ import PostCard from "@/components/public/PostCard";
 import { WebSiteJsonLd } from "@/components/seo/JsonLd";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
 import type { Block } from "@/lib/blocks";
+import { getMediaMap, collectImagePaths } from "@/lib/media";
 import styles from "@/components/public/public.module.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -24,11 +25,13 @@ export default async function HomePage() {
 
     if (page) {
       const blocks: Block[] = JSON.parse(page.content);
+      const pageImagePaths = collectImagePaths(blocks);
+      const pageMediaMap = await getMediaMap(pageImagePaths);
       return (
         <>
           <WebSiteJsonLd name={site.name} description={site.description} url={SITE_URL} />
           <div className={styles.pageContent}>
-            <BlockRenderer blocks={blocks} />
+            <BlockRenderer blocks={blocks} mediaMap={pageMediaMap} />
           </div>
         </>
       );
@@ -41,6 +44,11 @@ export default async function HomePage() {
     take: site.postsPerPage,
     include: { author: { select: { name: true } } },
   });
+
+  const postImagePaths = posts
+    .map((p) => p.featuredImage)
+    .filter((p): p is string => Boolean(p));
+  const postMediaMap = await getMediaMap(postImagePaths);
 
   return (
     <>
@@ -57,17 +65,22 @@ export default async function HomePage() {
 
       {posts.length > 0 ? (
         <section className={styles.postsGrid}>
-          {posts.map((post) => (
-            <PostCard
-              key={post.id}
-              title={post.title}
-              slug={post.slug}
-              excerpt={post.excerpt}
-              publishedAt={post.publishedAt?.toISOString() ?? null}
-              featuredImage={post.featuredImage}
-              authorName={post.author.name}
-            />
-          ))}
+          {posts.map((post) => {
+            const media = post.featuredImage ? postMediaMap.get(post.featuredImage) : undefined;
+            return (
+              <PostCard
+                key={post.id}
+                title={post.title}
+                slug={post.slug}
+                excerpt={post.excerpt}
+                publishedAt={post.publishedAt?.toISOString() ?? null}
+                featuredImage={post.featuredImage}
+                imageWidth={media?.width}
+                imageHeight={media?.height}
+                authorName={post.author.name}
+              />
+            );
+          })}
         </section>
       ) : (
         <div className={styles.emptyState}>

@@ -87,6 +87,19 @@ Definiert die Struktur des Website-Headers mit bis zu drei Zeilen (Top-Bar, Haup
 | `main` | Aktiviert | Hauptleiste mit Logo und Navigation |
 | `bottom-bar` | Deaktiviert | Leiste unter dem Header |
 
+### Farbvererbung in Rows
+
+Wenn eine Row `textColor` gesetzt hat, wird diese Farbe an alle Kindelemente vererbt. Nav-Links, Social-Icons und das Logo nutzen `color: inherit` und passen sich automatisch an. Dadurch funktioniert z.B. eine dunkle Top-Bar mit heller Schrift korrekt, ohne dass Links ihre eigene Farbe erzwingen.
+
+### Responsives Verhalten
+
+Auf Bildschirmen unter 768px:
+- **Top-Bar und Bottom-Bar** werden ausgeblendet
+- **Center-Spalte** wird ausgeblendet
+- **Desktop-Navigation** (`primary-menu`, `secondary-menu`) wird ausgeblendet
+- **Hamburger-Menu** erscheint automatisch (Slide-in von rechts mit allen Nav-Items inkl. Untermenüs)
+- **Suchfeld und Social-Icons** werden im Header ausgeblendet (verfügbar über Widgets/Mobile-Menu)
+
 ---
 
 ## Footer-Builder
@@ -142,6 +155,17 @@ Definiert die Struktur des Website-Footers mit einem Widget-Bereich und einer Bo
 | `social-icons` | Social-Media-Links |
 | `custom-text` | Frei definierbarer Text |
 | `custom-html` | Frei definierbarer HTML-Code |
+
+### Farbvererbung im Footer
+
+Wie beim Header-Builder erben Footer-Widgets und Links die `textColor` der jeweiligen Row. Widget-Titel, -Inhalte und Social-Links passen sich automatisch an die Row-Farbe an.
+
+### Responsives Verhalten
+
+Auf Bildschirmen unter 768px:
+- **Widget-Grid** wird auf eine Spalte gestapelt (unabhängig vom konfigurierten Layout)
+- **Bottom-Bar** wird vertikal zentriert gestapelt
+- Alle Spalten (left/center/right) werden zentriert
 
 ---
 
@@ -206,6 +230,8 @@ Steuert die Darstellung der Blog-Übersichtsseite.
 | `postsPerPage` | number | 10 | Beiträge pro Seite |
 | `sidebarEnabled` | boolean | false | Sidebar anzeigen |
 | `sidebarPosition` | "left" \| "right" | "right" | Sidebar-Position |
+
+**Responsives Verhalten:** Auf Bildschirmen unter 768px wird die Sidebar unter den Hauptinhalt gestapelt (volle Breite), unabhängig von `sidebarPosition`.
 
 ---
 

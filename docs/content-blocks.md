@@ -192,8 +192,8 @@ Ein Bild mit optionaler Bildunterschrift und flexibler Positionierung.
 | Wert     | Verhalten                                                                 |
 |----------|---------------------------------------------------------------------------|
 | `full`   | Volle Breite des Content-Bereichs                                        |
-| `left`   | 50% Breite, linksbündig, Text fließt rechts daneben (Float)             |
-| `right`  | 50% Breite, rechtsbündig, Text fließt links daneben (Float)            |
+| `left`   | 50% Breite, linksbündig, Text fließt rechts daneben (Float). Auf Mobilgeräten (< 768px): volle Breite, kein Float |
+| `right`  | 50% Breite, rechtsbündig, Text fließt links daneben (Float). Auf Mobilgeräten (< 768px): volle Breite, kein Float |
 | `inline` | Natürliche Größe des Bildes, Inline-Darstellung                         |
 
 Bilder mit `left` oder `right` eignen sich dafür, den Textfluss nicht zu unterbrechen -- der nächste `paragraph`-Block fließt neben dem Bild:

@@ -123,3 +123,12 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .image_left,
+  .image_right {
+    float: none;
+    width: 100%;
+    margin: 0 0 1rem;
+  }
+}

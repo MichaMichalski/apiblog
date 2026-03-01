@@ -60,6 +60,8 @@ model Media {
   path      String
   mimeType  String
   size      Int
+  width     Int      @default(0)
+  height    Int      @default(0)
   alt       String   @default("")
   createdAt DateTime @default(now())
 }
@@ -68,4 +70,14 @@ model Setting {
   id    String @id @default(cuid())
   key   String @unique
   value String
+}
+
+model Redirect {
+  id          String   @id @default(cuid())
+  source      String   @unique
+  destination String
+  statusCode  Int      @default(301)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

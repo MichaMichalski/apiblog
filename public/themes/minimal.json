@@ -3,6 +3,7 @@
   "colors": {
     "primary": "#000000",
     "primaryHover": "#333333",
+    "primaryContrast": "#FFFFFF",
     "secondary": "#666666",
     "secondaryHover": "#444444",
     "background": "#FFFFFF",

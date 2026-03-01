@@ -3,6 +3,7 @@
   "colors": {
     "primary": "#3B82F6",
     "primaryHover": "#2563EB",
+    "primaryContrast": "#FFFFFF",
     "secondary": "#10B981",
     "secondaryHover": "#059669",
     "background": "#FFFFFF",
@@ -54,7 +55,7 @@
     "table": { "borderColor": "", "headerBackground": "", "headerColor": "", "stripedRows": "false", "fontSize": "0.875rem" }
   },
   "sections": {
-    "header": { "height": "64px", "background": "", "borderColor": "", "shadow": "none", "logoFontSize": "1.25rem", "navFontSize": "0.9375rem", "navGap": "1.5rem", "padding": "0 1.5rem", "sticky": "true" },
+    "header": { "height": "64px", "background": "", "textColor": "", "borderColor": "", "shadow": "none", "logoFontSize": "1.25rem", "navFontSize": "0.9375rem", "navGap": "1.5rem", "padding": "0 1.5rem", "sticky": "true" },
     "footer": { "background": "", "textColor": "", "borderColor": "", "padding": "2rem 0", "fontSize": "0.875rem" },
     "hero": { "background": "", "textColor": "", "padding": "4rem 1.5rem", "titleFontSize": "2.5rem", "descriptionFontSize": "1.125rem", "textAlign": "center", "backgroundImage": "", "backgroundSize": "cover", "backgroundPosition": "center", "overlay": "" },
     "postCard": { "background": "", "borderColor": "", "borderRadius": "", "shadow": "", "hoverShadow": "", "imageAspectRatio": "16/9", "titleFontSize": "1.25rem", "excerptFontSize": "0.9375rem", "metaFontSize": "0.8125rem", "padding": "1.25rem" },

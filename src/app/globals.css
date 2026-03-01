@@ -17,7 +17,7 @@ body {
   font-family: var(--font-body);
   font-weight: var(--font-body-weight);
   color: var(--color-text);
-  background: var(--color-background);
+  background-color: var(--bg-body-color, var(--color-background));
   background-image: var(--bg-body-image, none);
   background-size: var(--bg-body-size, cover);
   background-position: var(--bg-body-position, center);
@@ -191,7 +191,47 @@ table th {
   letter-spacing: 0.05em;
 }
 
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-primary);
+  color: var(--color-primary-contrast, #fff);
+  border-radius: var(--button-border-radius, 6px);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  color: var(--color-primary-contrast, #fff);
+  text-decoration: none;
+}
+
+/* Global focus-visible */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 ::selection {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-primary-contrast, #fff);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

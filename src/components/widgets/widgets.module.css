@@ -16,7 +16,7 @@
   font-weight: var(--font-heading-weight);
   font-size: 1rem;
   margin-bottom: 0.75rem;
-  color: var(--color-text);
+  color: inherit;
 }
 
 .widgetPlaceholder {
@@ -27,7 +27,7 @@
 .widgetContent {
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: var(--color-text);
+  color: inherit;
 }
 
 .widgetContent p {
@@ -69,14 +69,14 @@
 .widgetListItemTitle {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: inherit;
   text-decoration: none;
   display: block;
   line-height: 1.4;
 }
 
 .widgetListItemTitle:hover {
-  color: var(--color-primary);
+  opacity: 0.75;
 }
 
 .widgetListItemMeta {
@@ -109,7 +109,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--input-border-radius);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-primary-contrast, #fff);
   font-size: 0.875rem;
   cursor: pointer;
 }
@@ -128,7 +128,7 @@
   height: 36px;
   border-radius: 50%;
   background: var(--color-surface-hover);
-  color: var(--color-text);
+  color: inherit;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 600;
@@ -137,7 +137,7 @@
 
 .widgetSocialLink:hover {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-primary-contrast, #fff);
 }
 
 .widgetNewsletterForm {

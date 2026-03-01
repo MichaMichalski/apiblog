@@ -56,6 +56,7 @@ Jeder Schlüssel wird zu einer CSS-Variable `--color-<name>` (camelCase wird zu 
 |------------------|---------------------------|-------------------------------------------------|
 | `primary`        | `--color-primary`         | Primärfarbe: Links, Buttons, Akzente            |
 | `primaryHover`   | `--color-primary-hover`   | Hover-Zustand der Primärfarbe                   |
+| `primaryContrast`| `--color-primary-contrast`| Textfarbe auf Primary-Hintergrund (Buttons, aktive Pagination, Selection). Standard: `#FFFFFF` |
 | `secondary`      | `--color-secondary`       | Sekundärfarbe: Badges, Sekundär-Buttons         |
 | `secondaryHover` | `--color-secondary-hover` | Hover-Zustand der Sekundärfarbe                 |
 | `background`     | `--color-background`      | Hintergrund des `<body>` und Hauptflächen       |
@@ -69,6 +70,12 @@ Jeder Schlüssel wird zu einer CSS-Variable `--color-<name>` (camelCase wird zu 
 | `warning`        | `--color-warning`         | Warnungen                                       |
 
 Alle Werte sind gültige CSS-Farbwerte (Hex, RGB, HSL).
+
+**Kontrast-Prüfung:** Der Admin Theme-Editor (`/admin/theme`) enthält eine WCAG-Kontrast-Prüfung, die automatisch die wichtigsten Farbkombinationen (Text/Hintergrund, Primary-Kontrast/Primary, etc.) überprüft und warnt, wenn das WCAG AA Mindestkontrastverhältnis von 4.5:1 nicht erreicht wird.
+
+**`primaryContrast`:** Diese Farbe wird überall dort verwendet, wo Text auf einem Primary-farbigen Hintergrund dargestellt wird (Buttons, aktive Pagination, Social-Link-Hover, Search-Button, Text-Selection). Bei hellen Primary-Farben sollte hier ein dunkler Wert gesetzt werden (z.B. `#000000`), bei dunklen Primary-Farben bleibt `#FFFFFF` passend.
+
+**Farbvererbung:** Header- und Footer-Builder-Rows können individuelle `textColor`-Werte setzen. Diese Farbe wird an alle Kindelemente (Logo, Nav-Links, Social-Icons, Widgets) vererbt. Nav-Links und Footer-Links nutzen `color: inherit` mit reduzierter Opacity, sodass sie den Row-textColor automatisch übernehmen.
 
 **Beispiel: Dark Mode durch Farb-Änderung:**
 
@@ -282,6 +289,7 @@ Steuert das Aussehen der Hauptbereiche der Website. CSS-Variable-Prefix: `--sect
 |----------------|--------------------------------------|-------------------------|
 | `height`       | `--section-header-height`           | Höhe des Headers        |
 | `background`   | `--section-header-background`       | Hintergrundfarbe        |
+| `textColor`    | `--section-header-text-color`       | Textfarbe (wird an Logo, Nav-Links, etc. vererbt) |
 | `borderColor`  | `--section-header-border-color`     | Rahmenfarbe unten       |
 | `shadow`       | `--section-header-shadow`           | Box-Shadow              |
 | `logoFontSize` | `--section-header-logo-font-size`   | Logo-Schriftgröße       |
@@ -350,7 +358,7 @@ Hintergrund-Konfigurationen. CSS-Variable-Prefix: `--bg-<name>-<eigenschaft>`.
 | Eigenschaft  | CSS-Variable            | Beschreibung            | Werte                          |
 |--------------|-------------------------|-------------------------|--------------------------------|
 | `type`       | `--bg-body-type`       | Hintergrundtyp          | solid, gradient, image         |
-| `color`      | `--bg-body-color`      | Hintergrundfarbe        | CSS-Farbwert                   |
+| `color`      | `--bg-body-color`      | Hintergrundfarbe (überschreibt `colors.background` für den Body) | CSS-Farbwert |
 | `image`      | `--bg-body-image`      | Hintergrundbild-URL     | url(...)                       |
 | `size`       | `--bg-body-size`       | Hintergrundgröße        | cover, contain, auto           |
 | `position`   | `--bg-body-position`   | Position                | center, top, bottom            |

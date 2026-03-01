@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getBlogLayout } from "@/lib/customizer";
 import PostCard from "@/components/public/PostCard";
 import WidgetArea from "@/components/widgets/WidgetArea";
+import { getMediaMap } from "@/lib/media";
 import styles from "@/components/public/public.module.css";
 
 export const revalidate = 3600;
@@ -36,6 +37,11 @@ export default async function BlogPage({
 
   const totalPages = Math.ceil(totalCount / perPage);
 
+  const postImagePaths = posts
+    .map((p) => p.featuredImage)
+    .filter((p): p is string => Boolean(p));
+  const postMediaMap = await getMediaMap(postImagePaths);
+
   const gridStyle: React.CSSProperties = {
     gridTemplateColumns:
       blogLayout.layout === "list"
@@ -52,19 +58,24 @@ export default async function BlogPage({
 
       {posts.length > 0 ? (
         <section className={styles.postsGrid} style={gridStyle}>
-          {posts.map((post) => (
-            <PostCard
-              key={post.id}
-              title={post.title}
-              slug={post.slug}
-              excerpt={blogLayout.showExcerpt ? post.excerpt.slice(0, blogLayout.excerptLength) : ""}
-              publishedAt={blogLayout.showDate ? (post.publishedAt?.toISOString() ?? null) : null}
-              featuredImage={blogLayout.showFeaturedImage ? post.featuredImage : null}
-              authorName={blogLayout.showAuthor ? post.author.name : ""}
-              showReadMore={blogLayout.showReadMore}
-              readMoreText={blogLayout.readMoreText}
-            />
-          ))}
+          {posts.map((post) => {
+            const media = post.featuredImage ? postMediaMap.get(post.featuredImage) : undefined;
+            return (
+              <PostCard
+                key={post.id}
+                title={post.title}
+                slug={post.slug}
+                excerpt={blogLayout.showExcerpt ? post.excerpt.slice(0, blogLayout.excerptLength) : ""}
+                publishedAt={blogLayout.showDate ? (post.publishedAt?.toISOString() ?? null) : null}
+                featuredImage={blogLayout.showFeaturedImage ? post.featuredImage : null}
+                imageWidth={media?.width}
+                imageHeight={media?.height}
+                authorName={blogLayout.showAuthor ? post.author.name : ""}
+                showReadMore={blogLayout.showReadMore}
+                readMoreText={blogLayout.readMoreText}
+              />
+            );
+          })}
         </section>
       ) : (
         <div className={styles.emptyState}>

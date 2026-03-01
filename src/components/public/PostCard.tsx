@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ResponsiveImage from "@/components/shared/ResponsiveImage";
 import styles from "./public.module.css";
 
 interface PostCardProps {
@@ -7,6 +8,8 @@ interface PostCardProps {
   excerpt: string;
   publishedAt: string | null;
   featuredImage: string | null;
+  imageWidth?: number;
+  imageHeight?: number;
   authorName: string;
   showReadMore?: boolean;
   readMoreText?: string;
@@ -18,6 +21,8 @@ export default function PostCard({
   excerpt,
   publishedAt,
   featuredImage,
+  imageWidth,
+  imageHeight,
   authorName,
   showReadMore,
   readMoreText,
@@ -26,7 +31,13 @@ export default function PostCard({
     <article className={styles.postCard}>
       {featuredImage && (
         <Link href={`/blog/${slug}`} className={styles.postCardImage}>
-          <img src={featuredImage} alt={title} loading="lazy" />
+          <ResponsiveImage
+            src={featuredImage}
+            alt={title}
+            width={imageWidth ?? 0}
+            height={imageHeight ?? 0}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </Link>
       )}
       <div className={styles.postCardContent}>

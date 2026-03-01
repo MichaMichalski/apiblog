@@ -12,6 +12,7 @@ const navItems = [
   { href: "/admin/media", label: "Medien", icon: "🖼️" },
   { href: "/admin/menus", label: "Menüs", icon: "☰" },
   { href: "/admin/widgets", label: "Widgets", icon: "🧩" },
+  { href: "/admin/redirects", label: "Weiterleitungen", icon: "↪" },
   { href: "/admin/site", label: "Website", icon: "🌐" },
   { href: "/admin/theme", label: "Theme", icon: "🎨" },
   { href: "/admin/customizer", label: "Customizer", icon: "⚙️" },

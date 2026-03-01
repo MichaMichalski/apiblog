@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { getThumbnailPath } from "@/lib/media";
 import styles from "./widgets.module.css";
 
 interface RecentPostsWidgetProps {
@@ -29,7 +30,7 @@ export default async function RecentPostsWidget({ title, count, showDate, showIm
         {posts.map((post) => (
           <li key={post.slug} className={styles.widgetListItem}>
             {showImage && post.featuredImage && (
-              <img src={post.featuredImage} alt={post.title} className={styles.widgetListItemImage} />
+              <img src={getThumbnailPath(post.featuredImage)} alt={post.title} className={styles.widgetListItemImage} />
             )}
             <div className={styles.widgetListItemContent}>
               <Link href={`/blog/${post.slug}`} className={styles.widgetListItemTitle}>

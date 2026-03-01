@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getSiteFromDB } from "@/lib/site";
 import { getMenuForLocation, buildMenuTree } from "@/lib/menus";
 import { getHeaderBuilder, type HeaderBuilderRow, type HeaderBuilderColumn } from "@/lib/customizer";
+import MobileMenuToggle from "./MobileMenuToggle";
 import styles from "./public.module.css";
 
 export default async function Header() {
@@ -35,7 +36,7 @@ export default async function Header() {
         );
       case "primary-menu":
         return (
-          <nav className={styles.nav} key="primary-menu">
+          <nav className={`${styles.nav} ${styles.desktopOnly}`} key="primary-menu" aria-label="Hauptnavigation">
             {navItems.map((item) => (
               <div key={item.href} className={styles.navItem}>
                 <Link href={item.href} className={styles.navLink} target={item.target} rel={item.target === "_blank" ? "noopener noreferrer" : undefined}>
@@ -56,7 +57,7 @@ export default async function Header() {
         );
       case "secondary-menu":
         return (
-          <nav className={styles.nav} key="secondary-menu">
+          <nav className={`${styles.nav} ${styles.desktopOnly}`} key="secondary-menu" aria-label="Zusätzliche Navigation">
             {secondaryItems.map((item) => (
               <Link key={item.id} href={item.url} className={styles.navLink} target={item.target}>
                 {item.label}
@@ -126,6 +127,35 @@ export default async function Header() {
     );
   }
 
+  const mobileNavContent = (
+    <nav aria-label="Mobile Navigation">
+      {navItems.map((item) => (
+        <div key={item.href} className={styles.mobileNavItem}>
+          <Link href={item.href} className={styles.mobileNavLink} target={item.target}>
+            {item.label}
+          </Link>
+          {item.children.length > 0 && (
+            <div className={styles.mobileNavSub}>
+              {item.children.map((child) => (
+                <Link key={child.id} href={child.url} className={styles.mobileNavLink} target={child.target}>
+                  {child.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      {secondaryItems.length > 0 && (
+        <div className={styles.mobileNavDivider} />
+      )}
+      {secondaryItems.map((item) => (
+        <Link key={item.id} href={item.url} className={styles.mobileNavLink} target={item.target}>
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  );
+
   if (enabledRows.length === 0) {
     return (
       <header className={styles.header}>
@@ -133,7 +163,7 @@ export default async function Header() {
           <Link href="/" className={styles.logo}>
             {site.logo ? <img src={site.logo} alt={site.name} style={{ height: "2rem" }} /> : site.name}
           </Link>
-          <nav className={styles.nav}>
+          <nav className={`${styles.nav} ${styles.desktopOnly}`} aria-label="Hauptnavigation">
             {navItems.map((item) => (
               <div key={item.href} className={styles.navItem}>
                 <Link href={item.href} className={styles.navLink} target={item.target}>
@@ -142,6 +172,7 @@ export default async function Header() {
               </div>
             ))}
           </nav>
+          <MobileMenuToggle>{mobileNavContent}</MobileMenuToggle>
         </div>
       </header>
     );
@@ -150,6 +181,7 @@ export default async function Header() {
   return (
     <header className={styles.header}>
       {enabledRows.map((row) => renderRow(row))}
+      <MobileMenuToggle>{mobileNavContent}</MobileMenuToggle>
     </header>
   );
 }

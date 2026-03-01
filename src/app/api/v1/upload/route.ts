@@ -3,6 +3,7 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { prisma } from "@/lib/db";
 import { requireAuth, unauthorizedResponse } from "@/lib/auth";
+import { generateVariants, writeVariants } from "@/lib/image-processing";
 
 export async function GET(request: NextRequest) {
   const auth = await requireAuth(request);
@@ -49,12 +50,17 @@ export async function POST(request: NextRequest) {
     const filepath = join(uploadDir, filename);
     await writeFile(filepath, buffer);
 
+    const { files, width, height } = await generateVariants(buffer, filename, file.type);
+    await writeVariants(uploadDir, files);
+
     const media = await prisma.media.create({
       data: {
         filename,
         path: `/uploads/${filename}`,
         mimeType: file.type,
         size: file.size,
+        width,
+        height,
         alt: (formData.get("alt") as string) || "",
       },
     });

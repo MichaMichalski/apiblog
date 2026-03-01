@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { ThemeConfig } from "@/lib/theme";
+import { checkThemeContrast, type ContrastCheck } from "@/lib/contrast";
 import styles from "../../admin.module.css";
 
 type Tab = "colors" | "typography" | "sections" | "effects" | "layout";
@@ -136,6 +137,85 @@ function Field({ prop, value, onChange }: FieldProps) {
         onChange={(e) => onChange(e.target.value)}
         placeholder="Standard"
       />
+    </div>
+  );
+}
+
+function ContrastPanel({ colors }: { colors: Record<string, string> }) {
+  const checks = useMemo(() => checkThemeContrast(colors), [colors]);
+  const hasIssues = checks.some((c) => c.level === "fail");
+
+  return (
+    <div className="card">
+      <h2 style={{ fontSize: "1.125rem", marginBottom: "1rem" }}>
+        Kontrast-Prüfung (WCAG)
+        {hasIssues && <span style={{ color: "var(--color-error)", marginLeft: "0.5rem", fontSize: "0.875rem" }}>Probleme gefunden</span>}
+      </h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {checks.map((check) => (
+          <div
+            key={check.pair}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              padding: "0.5rem 0.75rem",
+              borderRadius: "var(--card-border-radius)",
+              background: check.level === "fail" ? "rgba(239, 68, 68, 0.08)" : check.level === "AA" ? "rgba(245, 158, 11, 0.08)" : "rgba(16, 185, 129, 0.08)",
+              border: `1px solid ${check.level === "fail" ? "rgba(239, 68, 68, 0.2)" : check.level === "AA" ? "rgba(245, 158, 11, 0.2)" : "rgba(16, 185, 129, 0.2)"}`,
+            }}
+          >
+            <div style={{ display: "flex", gap: "0.25rem", alignItems: "center", flexShrink: 0 }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 20,
+                  height: 20,
+                  borderRadius: 4,
+                  background: check.bg,
+                  border: "1px solid var(--color-border)",
+                }}
+              />
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 20,
+                  height: 20,
+                  borderRadius: 4,
+                  background: check.bg,
+                  color: check.fg,
+                  fontSize: "0.625rem",
+                  fontWeight: 700,
+                  border: "1px solid var(--color-border)",
+                }}
+              >
+                A
+              </span>
+            </div>
+            <span style={{ flex: 1, fontSize: "0.8125rem" }}>{check.pair}</span>
+            <span style={{ fontSize: "0.8125rem", fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>
+              {check.ratio.toFixed(1)}:1
+            </span>
+            <span
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 600,
+                padding: "0.125rem 0.375rem",
+                borderRadius: 9999,
+                background: check.level === "fail" ? "var(--color-error)" : check.level === "AA" ? "var(--color-warning)" : "var(--color-success)",
+                color: "#fff",
+              }}
+            >
+              {check.level === "fail" ? "Fehlt" : check.level}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.75rem" }}>
+        WCAG AA erfordert mindestens 4.5:1 für normalen Text, 3:1 für großen Text.
+      </p>
     </div>
   );
 }
@@ -298,29 +378,32 @@ export default function ThemePage() {
       </div>
 
       {activeTab === "colors" && (
-        <div className="card">
-          <h2 style={{ fontSize: "1.125rem", marginBottom: "1rem" }}>Farbpalette</h2>
-          <div className={styles.themeColorGrid}>
-            {Object.entries(theme.colors).map(([key, value]) => (
-              <div key={key} className={styles.colorField}>
-                <input
-                  type="color"
-                  value={value}
-                  onChange={(e) => updateColor(key, e.target.value)}
-                />
-                <div>
-                  <div className={styles.colorLabel}>{key}</div>
+        <>
+          <div className="card" style={{ marginBottom: "1.5rem" }}>
+            <h2 style={{ fontSize: "1.125rem", marginBottom: "1rem" }}>Farbpalette</h2>
+            <div className={styles.themeColorGrid}>
+              {Object.entries(theme.colors).map(([key, value]) => (
+                <div key={key} className={styles.colorField}>
                   <input
-                    className="input"
+                    type="color"
                     value={value}
                     onChange={(e) => updateColor(key, e.target.value)}
-                    style={{ width: "100px", fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
                   />
+                  <div>
+                    <div className={styles.colorLabel}>{key}</div>
+                    <input
+                      className="input"
+                      value={value}
+                      onChange={(e) => updateColor(key, e.target.value)}
+                      style={{ width: "100px", fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+          <ContrastPanel colors={theme.colors} />
+        </>
       )}
 
       {activeTab === "typography" && (

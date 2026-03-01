@@ -33,6 +33,8 @@ Open [http://localhost:3000](http://localhost:3000) for the public site and [htt
 - **REST API** — Full CRUD for posts, pages, themes, menus, widgets, and all customizer settings via `/api/v1/`
 - **SEO Suite** — Sitemap.xml, robots.txt, Open Graph, Twitter Cards, JSON-LD Structured Data, canonical URLs, meta robots
 - **SEO Analysis** — Yoast-like real-time SEO scoring in the admin editor (keyword density, title length, meta description, readability)
+- **Responsive Design** — Mobile hamburger menu, stacking sidebar/footer/image blocks, optimized touch targets
+- **Accessibility** — Skip-to-content link, `:focus-visible` outlines, `aria-label` on navigations, `prefers-reduced-motion` support, WCAG contrast checking in theme editor
 - **Cookie Consent** — GDPR-compliant consent banner with configurable analytics/advertising categories
 - **Google Analytics & AdSense** — Integrated with consent-gated loading
 - **Admin Panel** — Dashboard, post/page editors, theme editor, menu editor, widget manager, customizer, media library

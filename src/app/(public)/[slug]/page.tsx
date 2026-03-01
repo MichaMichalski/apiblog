@@ -6,6 +6,7 @@ import BlockRenderer from "@/components/blocks/BlockRenderer";
 import { WebPageJsonLd } from "@/components/seo/JsonLd";
 import { getCanonicalUrl } from "@/lib/seo";
 import type { Block } from "@/lib/blocks";
+import { getMediaMap, collectImagePaths } from "@/lib/media";
 import styles from "@/components/public/public.module.css";
 
 export const revalidate = 3600;
@@ -75,6 +76,7 @@ export default async function StaticPage({
   const site = await getSiteFromDB();
   const blocks: Block[] = JSON.parse(page.content);
   const canonical = page.canonicalUrl || getCanonicalUrl(`/${page.slug}`);
+  const mediaMap = await getMediaMap(collectImagePaths(blocks));
 
   return (
     <>
@@ -86,7 +88,7 @@ export default async function StaticPage({
       />
       <div className={styles.pageContent}>
         <h1 className={styles.pageTitle}>{page.title}</h1>
-        <BlockRenderer blocks={blocks} />
+        <BlockRenderer blocks={blocks} mediaMap={mediaMap} />
       </div>
     </>
   );
