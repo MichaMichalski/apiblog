@@ -90,11 +90,14 @@ GET    /api/v1/posts/:id      Get post (includes SEO fields)
 PUT    /api/v1/posts/:id      Update post (SEO fields individually updateable)
 DELETE /api/v1/posts/:id      Delete post
 
-POST   /api/v1/pages          Create page (with SEO fields)
-GET    /api/v1/pages          List pages
-GET    /api/v1/pages/:id      Get page (includes SEO fields)
-PUT    /api/v1/pages/:id      Update page (SEO fields individually updateable)
-DELETE /api/v1/pages/:id      Delete page
+POST   /api/v1/pages                  Create page (with SEO fields)
+GET    /api/v1/pages                  List pages
+GET    /api/v1/pages/:id              Get page by ID (includes SEO fields)
+PUT    /api/v1/pages/:id              Update page by ID
+DELETE /api/v1/pages/:id              Delete page by ID
+GET    /api/v1/pages/by-slug/:slug    Get page by slug (includes id + SEO fields)
+PUT    /api/v1/pages/by-slug/:slug    Update page by slug
+DELETE /api/v1/pages/by-slug/:slug    Delete page by slug
 
 GET    /api/v1/theme          Get current theme
 PUT    /api/v1/theme          Update theme

@@ -96,6 +96,56 @@ Felder für eine Seite bei der Erstellung über `POST /api/v1/pages`:
 
 Reservierte Slugs (`blog`, `admin`, `api`) sind für Seiten nicht erlaubt.
 
+### Seiten per Slug abrufen / bearbeiten / löschen
+
+Neben den ID-basierten Endpoints (`/api/v1/pages/:id`) stehen alle CRUD-Operationen auch per Slug zur Verfügung:
+
+```
+GET    /api/v1/pages/by-slug/:slug    Seite per Slug abrufen
+PUT    /api/v1/pages/by-slug/:slug    Seite per Slug aktualisieren
+DELETE /api/v1/pages/by-slug/:slug    Seite per Slug löschen
+```
+
+Die Response-Struktur ist identisch zu den ID-Endpoints und enthält immer das `id`-Feld:
+
+```json
+{
+  "page": {
+    "id": "clxyz...",
+    "title": "Über uns",
+    "slug": "ueber-uns",
+    "content": [ ... ],
+    "status": "published",
+    "seoTitle": "Über uns",
+    "seoDescription": "Erfahren Sie mehr über unser Unternehmen",
+    "focusKeyword": "über uns unternehmen",
+    "noIndex": false,
+    "canonicalUrl": null,
+    "sortOrder": 1,
+    "createdAt": "2026-03-01T12:00:00.000Z",
+    "updatedAt": "2026-03-01T12:00:00.000Z"
+  }
+}
+```
+
+**Beispiel: Seite per Slug abrufen**
+
+```bash
+curl http://localhost:3000/api/v1/pages/by-slug/ueber-uns \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+**Beispiel: Seite per Slug aktualisieren**
+
+```bash
+curl -X PUT http://localhost:3000/api/v1/pages/by-slug/ueber-uns \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -d '{ "title": "Über uns - Aktualisiert", "status": "published" }'
+```
+
+Wird per PUT der Slug geändert, erfolgt der Lookup über den alten Slug im URL-Pfad. Die Response enthält den neuen Slug.
+
 ### Automatisch generierte SEO-Tags (pro Page)
 
 - `<title>` — aus `seoTitle` oder `title`
