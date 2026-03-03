@@ -17,6 +17,7 @@ const blockTypes: { type: Block["type"]; label: string }[] = [
   { type: "list", label: "Liste" },
   { type: "divider", label: "Trennlinie" },
   { type: "ad", label: "Werbung" },
+  { type: "html", label: "HTML / Embed" },
 ];
 
 function createBlock(type: Block["type"]): Block {
@@ -29,6 +30,7 @@ function createBlock(type: Block["type"]): Block {
     case "list": return { type: "list", style: "unordered", items: [""] };
     case "divider": return { type: "divider" };
     case "ad": return { type: "ad", provider: "adsense", slot: "", format: "in-article" };
+    case "html": return { type: "html", content: "" };
   }
 }
 
@@ -288,6 +290,26 @@ function BlockFieldEditor({
             <option value="display">Display</option>
             <option value="in-feed">In-Feed</option>
           </select>
+        </div>
+      );
+
+    case "html":
+      return (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <textarea
+            className="textarea"
+            value={block.content}
+            onChange={(e) => onChange({ ...block, content: e.target.value })}
+            placeholder="HTML-Code eingeben (z.B. <iframe>, <script>, Embed-Code)..."
+            rows={5}
+            style={{ fontFamily: "monospace" }}
+          />
+          <input
+            className="input"
+            value={block.caption ?? ""}
+            onChange={(e) => onChange({ ...block, caption: e.target.value })}
+            placeholder="Beschriftung (optional)"
+          />
         </div>
       );
 

@@ -124,6 +124,7 @@ Das `content`-Feld ist ein JSON-Array von Block-Objekten. Jeder Block hat ein `t
 | `list`      | Nummerierte oder Aufzählungsliste     | nein                    |
 | `divider`   | Horizontale Trennlinie                | nein                    |
 | `ad`        | Werbeanzeige (z.B. Google AdSense)    | ja (advertising)        |
+| `html`      | Beliebiges HTML / Embed-Code          | nein                    |
 
 ---
 
@@ -330,6 +331,58 @@ Setzen Sie `ad`-Blöcke zwischen `paragraph`-Blöcke, um Werbung natürlich in d
   { "type": "paragraph", "content": "Der Text geht nach der Anzeige weiter..." }
 ]
 ```
+
+---
+
+### `html`
+
+Ein generischer Block für beliebiges HTML bzw. Embed-Code. Damit lassen sich externe Inhalte wie YouTube-Videos, Social-Media-Posts, Newsletter-Formulare, Widgets oder sonstige Objekte direkt im Content einbetten.
+
+```json
+{
+  "type": "html",
+  "content": "<iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" width=\"560\" height=\"315\" frameborder=\"0\" allowfullscreen></iframe>",
+  "caption": "YouTube-Video"
+}
+```
+
+| Feld      | Typ    | Pflicht | Beschreibung                                          |
+|-----------|--------|---------|-------------------------------------------------------|
+| `type`    | string | ja      | Muss `"html"` sein                                    |
+| `content` | string | ja      | Roher HTML-Code (Iframes, Scripts, Embed-Snippets)    |
+| `caption` | string | nein    | Optionale Beschriftung unter dem eingebetteten Inhalt  |
+
+**Anwendungsbeispiele:**
+
+YouTube-Video einbetten:
+
+```json
+{
+  "type": "html",
+  "content": "<iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" width=\"560\" height=\"315\" frameborder=\"0\" allowfullscreen></iframe>",
+  "caption": "Mein Video"
+}
+```
+
+Newsletter-Formular:
+
+```json
+{
+  "type": "html",
+  "content": "<form action=\"https://example.com/subscribe\" method=\"post\"><input type=\"email\" name=\"email\" placeholder=\"E-Mail-Adresse\"><button type=\"submit\">Abonnieren</button></form>"
+}
+```
+
+Beliebiger Embed-Code (z.B. Social Media):
+
+```json
+{
+  "type": "html",
+  "content": "<blockquote class=\"twitter-tweet\"><a href=\"https://twitter.com/example/status/123\"></a></blockquote><script async src=\"https://platform.twitter.com/widgets.js\"></script>"
+}
+```
+
+> **Sicherheitshinweis:** Der HTML-Code wird unbereinigt gerendert (`dangerouslySetInnerHTML`). Verwenden Sie diesen Block-Typ ausschließlich mit vertrauenswürdigen Inhalten. Eingegebener HTML-Code wird nicht serverseitig sanitisiert.
 
 ---
 

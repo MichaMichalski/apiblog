@@ -124,6 +124,15 @@
   justify-content: center;
 }
 
+.htmlBlock {
+  width: 100%;
+  overflow: hidden;
+}
+
+.htmlBlock iframe {
+  max-width: 100%;
+}
+
 @media (max-width: 768px) {
   .image_left,
   .image_right {

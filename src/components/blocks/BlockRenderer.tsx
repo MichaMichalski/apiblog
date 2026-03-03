@@ -8,6 +8,7 @@ import QuoteBlock from "./QuoteBlock";
 import CodeBlock from "./CodeBlock";
 import ListBlock from "./ListBlock";
 import DividerBlock from "./DividerBlock";
+import HtmlBlock from "./HtmlBlock";
 import styles from "./blocks.module.css";
 
 interface BlockRendererProps {
@@ -53,6 +54,8 @@ function renderBlock(block: Block, mediaMap?: MediaMap) {
       return <ListBlock block={block} />;
     case "divider":
       return <DividerBlock />;
+    case "html":
+      return <HtmlBlock block={block} />;
     default: {
       const fallback = block as { type: string; content?: string };
       return <p>{fallback.content ?? `[Unknown block: ${fallback.type}]`}</p>;

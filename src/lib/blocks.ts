@@ -48,6 +48,12 @@ export const dividerBlockSchema = z.object({
   type: z.literal("divider"),
 });
 
+export const htmlBlockSchema = z.object({
+  type: z.literal("html"),
+  content: z.string(),
+  caption: z.string().optional(),
+});
+
 export const blockSchema = z.discriminatedUnion("type", [
   paragraphBlockSchema,
   headingBlockSchema,
@@ -57,6 +63,7 @@ export const blockSchema = z.discriminatedUnion("type", [
   codeBlockSchema,
   listBlockSchema,
   dividerBlockSchema,
+  htmlBlockSchema,
 ]);
 
 export type Block = z.infer<typeof blockSchema>;
@@ -68,6 +75,7 @@ export type QuoteBlock = z.infer<typeof quoteBlockSchema>;
 export type CodeBlock = z.infer<typeof codeBlockSchema>;
 export type ListBlock = z.infer<typeof listBlockSchema>;
 export type DividerBlock = z.infer<typeof dividerBlockSchema>;
+export type HtmlBlock = z.infer<typeof htmlBlockSchema>;
 
 export const blocksSchema = z.array(blockSchema);
 
