@@ -14,6 +14,7 @@ interface ResponsiveImageProps {
 
 const VARIANTS = [
   { key: "sm", width: 300 },
+  { key: "md", width: 768 },
   { key: "lg", width: 1024 },
 ] as const;
 
@@ -48,7 +49,6 @@ export default function ResponsiveImage({
         alt={alt}
         className={className}
         style={style}
-        loading={priority ? undefined : "lazy"}
         decoding="async"
       />
     );
@@ -91,10 +91,7 @@ export default function ResponsiveImage({
         `${buildWebpPath(resolvedSrc)} ${width}w`,
       ].join(", ");
 
-  const fallbackSrc =
-    applicableVariants.length > 0
-      ? buildVariantPath(resolvedSrc, applicableVariants[applicableVariants.length - 1].key, ext)
-      : resolvedSrc;
+  const fallbackSrc = resolvedSrc;
 
   return (
     <picture>

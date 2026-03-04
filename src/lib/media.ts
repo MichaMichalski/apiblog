@@ -10,8 +10,18 @@ interface MediaInfo {
 
 export type MediaMap = Map<string, MediaInfo>;
 
+function toRelativePath(p: string): string {
+  try {
+    return new URL(p).pathname;
+  } catch {
+    return p;
+  }
+}
+
 export async function getMediaMap(paths: string[]): Promise<MediaMap> {
-  const unique = [...new Set(paths.filter(Boolean))];
+  const originals = paths.filter(Boolean);
+  const normalized = originals.map(toRelativePath);
+  const unique = [...new Set(normalized)];
   if (unique.length === 0) return new Map();
 
   const records = await prisma.media.findMany({
@@ -28,6 +38,15 @@ export async function getMediaMap(paths: string[]): Promise<MediaMap> {
       mimeType: r.mimeType,
     });
   }
+
+  for (const op of originals) {
+    const np = toRelativePath(op);
+    const info = map.get(np);
+    if (info && !map.has(op)) {
+      map.set(op, info);
+    }
+  }
+
   return map;
 }
 

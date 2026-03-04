@@ -11,6 +11,7 @@ interface VariantResult {
 const VARIANT_DEFS = [
   { key: "thumb", maxWidth: 150, maxHeight: 150, crop: true },
   { key: "sm", maxWidth: 300, maxHeight: undefined, crop: false },
+  { key: "md", maxWidth: 768, maxHeight: undefined, crop: false },
   { key: "lg", maxWidth: 1024, maxHeight: undefined, crop: false },
 ] as const;
 

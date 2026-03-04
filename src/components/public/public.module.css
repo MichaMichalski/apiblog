@@ -344,6 +344,10 @@
   overflow: hidden;
 }
 
+.postCardImage picture {
+  display: contents;
+}
+
 .postCardImage img {
   width: 100%;
   height: 100%;
