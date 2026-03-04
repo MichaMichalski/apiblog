@@ -10,6 +10,10 @@ export default function SettingsPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const [revalLoading, setRevalLoading] = useState(false);
+  const [revalMessage, setRevalMessage] = useState("");
+  const [revalError, setRevalError] = useState("");
+
   async function handlePasswordChange(e: FormEvent) {
     e.preventDefault();
     setError("");
@@ -45,10 +49,50 @@ export default function SettingsPage() {
     }
   }
 
+  async function handleRevalidate() {
+    setRevalLoading(true);
+    setRevalMessage("");
+    setRevalError("");
+
+    try {
+      const res = await fetch("/api/v1/revalidate", { method: "POST" });
+      if (res.ok) {
+        const data = await res.json();
+        setRevalMessage(
+          `Alle Seiten wurden erfolgreich neu generiert (${new Date(data.timestamp).toLocaleString("de-DE")}).`
+        );
+      } else {
+        const data = await res.json();
+        setRevalError(data.error || "Revalidierung fehlgeschlagen.");
+      }
+    } catch {
+      setRevalError("Ein Fehler ist aufgetreten.");
+    } finally {
+      setRevalLoading(false);
+    }
+  }
+
   return (
     <>
       <div className={styles.topBar}>
         <h1 className="page-title">Einstellungen</h1>
+      </div>
+
+      <div className="card" style={{ maxWidth: "600px", marginBottom: "1.5rem" }}>
+        <h2 style={{ fontSize: "1.125rem", marginBottom: "1rem" }}>Cache &amp; Revalidierung</h2>
+        <p className="text-muted" style={{ fontSize: "0.875rem", lineHeight: 1.6, marginBottom: "1rem" }}>
+          Nach einem neuen Deployment kann es vorkommen, dass statische Seiten veraltete Daten anzeigen.
+          Klicken Sie auf den Button, um alle Seiten neu zu generieren und den Cache zu leeren.
+        </p>
+        {revalMessage && <div className="alert alert-success">{revalMessage}</div>}
+        {revalError && <div className="alert alert-error">{revalError}</div>}
+        <button
+          className="btn btn-primary"
+          onClick={handleRevalidate}
+          disabled={revalLoading}
+        >
+          {revalLoading ? "Wird neu generiert\u2026" : "Alle Seiten neu generieren"}
+        </button>
       </div>
 
       <div className="card" style={{ maxWidth: "600px", marginBottom: "1.5rem" }}>
